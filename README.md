@@ -1,5 +1,5 @@
 # Fábrica de Software 2025/1
-Fábrica de Software 2025/2
+Nome da equipe 
 
 ## Propostas de projeto
 
