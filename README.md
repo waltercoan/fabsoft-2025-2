@@ -2,12 +2,12 @@
 Nome da equipe 
 
 ## Propostas de projeto
-
+<s>
 - Nome do sistema Ex:(Sistema para Mecânica)
   - Funcionalidade 1 Cadastrar dados do Cliente
   - Funcionalidade 2 Cadastrar veículos
   - Funcionalidade 3
-
+</s>
 - Nome do sistema Ex:(Sistema para Mecânica)
   - Funcionalidade 1 Cadastrar dados do Cliente
   - Funcionalidade 2 Cadastrar veículos
@@ -32,3 +32,7 @@ Nome da equipe
 - VSCode
   - [VSCode](https://code.visualstudio.com/)
   - [Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+
+## Aula 12/08
+
+- Definir as histórias de usuario [EXEMPLOS](https://engsoftmoderna.info/cap3.html#hist%C3%B3rias-de-usu%C3%A1rios)
