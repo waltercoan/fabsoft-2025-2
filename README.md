@@ -3,10 +3,12 @@ Nome da equipe
 
 ## Propostas de projeto
 <s>
+  
 - Nome do sistema Ex:(Sistema para Mecânica)
   - Funcionalidade 1 Cadastrar dados do Cliente
   - Funcionalidade 2 Cadastrar veículos
   - Funcionalidade 3
+
 </s>
 - Nome do sistema Ex:(Sistema para Mecânica)
   - Funcionalidade 1 Cadastrar dados do Cliente
