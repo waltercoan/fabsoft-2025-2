@@ -82,27 +82,27 @@ classDiagram
           -email : String
           -dataNascimento: Date
 
-          +getId():long
-          +setId(id:long):void
-          +getNome():String
-          +setNome(nome:String):void
-          +getEndereco():String
-          +setEndereco(endereco:String):void
-          +getTelefone():String
-          +setTelefone(telefone:String):void
-          +getEmail():String
-          +setEmail(email:String):void
-          +getDataNascimento():Date
-          +setDataNascimento(dataNascimento:Date):void
+          +getId() long
+          +setId(id:long) void
+          +getNome() String
+          +setNome(nome:String) void
+          +getEndereco()  String
+          +setEndereco(endereco:String) void
+          +getTelefone() String
+          +setTelefone(telefone:String) void
+          +getEmail() String
+          +setEmail(email:String) void
+          +getDataNascimento() Date
+          +setDataNascimento(dataNascimento:Date) void
       }
       class Cidade{
           -id : long
           -nome : String
 
-          +getId():long
-          +setId(id:long):void
-          +getNome():String
-          +setNome(nome:String):void
+          +getId() long
+          +setId(id:long) void
+          +getNome() String
+          +setNome(nome:String) void
       }
       class Carro{
           -id : long
@@ -110,14 +110,14 @@ classDiagram
           -modelo : String
           -placa : String
 
-          +getId():long
-          +setId(id:long):void
-          +getMarca():String
-          +setMarca(marca:String):void
-          +getModelo():String
-          +setModelo(modelo:String):void
-          +getPlaca():String
-          +setPlaca(placa:String):void
+          +getId() long
+          +setId(id:long) void
+          +getMarca() String
+          +setMarca(marca:String) void
+          +getModelo() String
+          +setModelo(modelo:String) void
+          +getPlaca() String
+          +setPlaca(placa:String) void
 
       }
       class Revisao {
@@ -125,24 +125,24 @@ classDiagram
           -dataAgendamento : Date
           -dataRealizacao : Date
 
-          +getId():long
-          +setId(id:long):void
-          +getNome():String
-          +setNome(nome:String):void
-          +getDataAgendamento():Date
-          +setDataAgendamento(dataAgendamento:Date):void
-          +getDataRealizacao():Date
-          +setDataRealizacao(dataRealizacao:Date):void
+          +getId() long
+          +setId(id:long) void
+          +getNome() String
+          +setNome(nome:String) void
+          +getDataAgendamento() Date
+          +setDataAgendamento(dataAgendamento:Date) void
+          +getDataRealizacao() Date
+          +setDataRealizacao(dataRealizacao:Date) void
 
       }
       class ItemRevisao {
         -id : long
         -quantidade : int
 
-        +getId():long
-        +setId(id:long):void
-        +getQuantidade():int
-        +setQuantidade(quantidade:int):void
+        +getId() long
+        +setId(id:long) void
+        +getQuantidade() int
+        +setQuantidade(quantidade:int) void
 
       }
       class Peca{
@@ -150,12 +150,12 @@ classDiagram
           -codigo : String
           -valorUnitario : float
 
-          +getId():long
-          +setId(id:long):void
-          +getCodigo():String
-          +setCodigo(codigo:String):void
-          +getValorUnitario():float
-          +setValorUnitario(valorUnitario:float):void
+          +getId() long
+          +setId(id:long) void
+          +getCodigo() String
+          +setCodigo(codigo:String) void
+          +getValorUnitario() float
+          +setValorUnitario(valorUnitario:float) void
 
       }
     }
