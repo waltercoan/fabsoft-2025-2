@@ -63,7 +63,7 @@ Nome da equipe
 | `..\|>` | Realization   |
 | `..`    | Link (Dashed) |
 
-```mermaid-example
+```mermaid
 ---
 title: Diagrama de Entidades
 ---
