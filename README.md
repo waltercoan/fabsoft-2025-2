@@ -75,12 +75,12 @@ classDiagram
     ItemRevisao "*" --> "1" Peca
     namespace entity {
       class Cliente{
-          +id : long
-          +nome : String
-          +endereco : String
-          +telefone : String
-          +email : String
-          +dataNascimento: Date
+          -id : long
+          -nome : String
+          -endereco : String
+          -telefone : String
+          -email : String
+          -dataNascimento: Date
 
           +getId():long
           +setId(id:long):void
@@ -96,8 +96,8 @@ classDiagram
           +setDataNascimento(dataNascimento:Date):void
       }
       class Cidade{
-          +id : long
-          +nome : String
+          -id : long
+          -nome : String
 
           +getId():long
           +setId(id:long):void
@@ -105,10 +105,10 @@ classDiagram
           +setNome(nome:String):void
       }
       class Carro{
-          +id : long
-          +marca : String
-          +modelo : String
-          +placa : String
+          -id : long
+          -marca : String
+          -modelo : String
+          -placa : String
 
           +getId():long
           +setId(id:long):void
@@ -121,9 +121,9 @@ classDiagram
 
       }
       class Revisao {
-          +id : long
-          +dataAgendamento : Date
-          +dataRealizacao : Date
+          -id : long
+          -dataAgendamento : Date
+          -dataRealizacao : Date
 
           +getId():long
           +setId(id:long):void
@@ -136,8 +136,8 @@ classDiagram
 
       }
       class ItemRevisao {
-        +id : long
-        +quantidade : int
+        -id : long
+        -quantidade : int
 
         +getId():long
         +setId(id:long):void
@@ -146,9 +146,9 @@ classDiagram
 
       }
       class Peca{
-          +id : long
-          +codigo : String
-          +valorUnitario : float
+          -id : long
+          -codigo : String
+          -valorUnitario : float
 
           +getId():long
           +setId(id:long):void
