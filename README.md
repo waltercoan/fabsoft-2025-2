@@ -161,3 +161,21 @@ classDiagram
     }
 
 ```
+
+
+## Aula 28/08
+
+- Git (Branchs)
+
+```bash 
+git checkout -b nome-branch
+```
+
+[conventionalcommits](https://www.conventionalcommits.org/en/v1.0.0/)
+
+```bash 
+git add .
+git commit -m "mensagem"
+git push --set-upstream origin nome-branch
+```
+
