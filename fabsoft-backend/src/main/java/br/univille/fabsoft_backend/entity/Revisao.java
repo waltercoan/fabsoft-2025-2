@@ -1,6 +1,8 @@
 package br.univille.fabsoft_backend.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,7 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -29,6 +33,16 @@ public class Revisao {
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     private Carro carro;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "revisao_id")
+    private List<ItemRevisao> listaItens = new ArrayList<>();
+
+    public List<ItemRevisao> getListaItens() {
+        return listaItens;
+    }
+    public void setListaItens(List<ItemRevisao> listaItens) {
+        this.listaItens = listaItens;
+    }
     public Carro getCarro() {
         return carro;
     }
