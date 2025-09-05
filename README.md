@@ -180,3 +180,23 @@ git commit -m "mensagem"
 git push --set-upstream origin nome-branch
 ```
 
+## Aula 04/09
+
+### Clean Architecture
+![Clean Architecture](./diagramas/png/CleanArchitecture.jpg)
+
+### Diagrama de Camadas
+```mermaid
+---
+title: Arquitetura
+---
+block-beta
+  columns 1
+  block
+    Repository space Database[("Banco de Dados")]
+  end
+  Entity 
+  Repository --> Database
+
+```
+
