@@ -33,10 +33,19 @@ public class Revisao {
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
     private Carro carro;
 
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+    private Cliente cliente;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "revisao_id")
     private List<ItemRevisao> listaItens = new ArrayList<>();
-
+    
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
     public List<ItemRevisao> getListaItens() {
         return listaItens;
     }
