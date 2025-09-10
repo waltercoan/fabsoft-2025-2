@@ -193,9 +193,13 @@ title: Arquitetura
 block-beta
   columns 1
   block
+    Controller space Service 
+    Service space Repository
     Repository space Database[("Banco de Dados")]
   end
   Entity 
+  Controller --> Service
+  Service --> Repository
   Repository --> Database
 
 ```
