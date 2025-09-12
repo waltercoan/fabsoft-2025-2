@@ -21,4 +21,9 @@ public class ClienteServiceImpl
         return repository.findAll();
     }
 
+    @Override
+    public Cliente save(Cliente cliente) {
+        return repository.save(cliente);
+    }
+
 }
