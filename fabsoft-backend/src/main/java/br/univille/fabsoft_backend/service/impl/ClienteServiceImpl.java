@@ -26,4 +26,24 @@ public class ClienteServiceImpl
         return repository.save(cliente);
     }
 
+    @Override
+    public Cliente update(long id, Cliente cliente) throws Exception{
+
+        var clienteAntigo = repository.getById(id);
+        if(clienteAntigo == null){
+            throw new Exception("Cliente inexistente");
+        }
+
+        clienteAntigo.setNome(cliente.getNome());
+        clienteAntigo.setDataNascimento(cliente.getDataNascimento());
+        clienteAntigo.setEmail(cliente.getEmail());
+        clienteAntigo.setEndereco(cliente.getEndereco());
+        clienteAntigo.setTelefone(cliente.getTelefone());
+        clienteAntigo.setCidade(cliente.getCidade());
+        
+        repository.save(clienteAntigo);
+
+        return clienteAntigo;
+    }
+
 }

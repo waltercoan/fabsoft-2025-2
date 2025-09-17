@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,5 +57,24 @@ public class ClienteController {
             return new ResponseEntity<Cliente>(cliente,HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> 
+        update(@RequestBody Cliente cliente,
+            @PathVariable long id){
+
+        if(id <= 0 || cliente == null){
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            cliente = service.update(id, cliente);
+            return new ResponseEntity<Cliente>(cliente,
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        
     }
 }
