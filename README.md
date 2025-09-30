@@ -1,6 +1,25 @@
 # Fábrica de Software 2025/1
 Nome da equipe 
 
+
+## Lista de Equipes/Projetos
+- [Clara Meister Martinovsky e Guilherme Torres Fiedler claramartinovsky/fabsoft-2025-2:](https://github.com/claramartinovsky/fabsoft-2025-2)
+- [edsonjunior23/fabsoft-2025-02:](https://github.com/edsonjunior23/fabsoft-2025-02)
+- [Fellipe N. Prim e Lucas Felipe fellipe-prim/fabsoft-2025-2:](https://github.com/fellipe-prim/fabsoft-2025-2)
+- [Gian Carlo Fiamoncini e Carlos Alberto gianfiamonciniuniville/fabsoft-2025-2:](https://github.com/gianfiamonciniuniville/fabsoft-2025-2)
+- [hamsterbr/fabsoft-2025-2:](https://github.com/hamsterbr/fabsoft-2025-2)
+- [Caio ijustgotanidea/fabsoft-2025-2:](https://github.com/ijustgotanidea/fabsoft-2025-2)
+- [João Victor Corrêa Palhano JoaoPalhano07/fabsoft-2025-2:](https://github.com/JoaoPalhano07/fabsoft-2025-2)
+- [Jandir Neto e Lucas Bobato Lucas-Bobato/fabsoft-2025-2:](https://github.com/Lucas-Bobato/fabsoft-2025-2)
+- [Lucas Bigas Padilha LucasBigas/fabsoft-2025-2:](https://github.com/LucasBigas/fabsoft-2025-2)
+- [Pedro Henrique A. Alves pedrohaalves/fabsoft-2025-2:](https://github.com/pedrohaalves/fabsoft-2025-2)
+- [Pedro Henrique Placidina Maria PedroPlacidina/fabsoft-2025-2:](https://github.com/PedroPlacidina/fabsoft-2025-2)
+- [Bruno Deud e Reidner ReidnerFausto/fabsoft-2025-2:](https://github.com/ReidnerFausto/fabsoft-2025-2)
+- [Wellington Grein WellingtonGr3in/fabsoft-2025-2:](https://github.com/WellingtonGr3in/fabsoft-2025-2)
+- [Guilherme Passos de Borba xltgui/fabsoft-2025-2:](https://github.com/xltgui/fabsoft-2025-2)
+
+
+
 ## Propostas de projeto
 <s>
   
