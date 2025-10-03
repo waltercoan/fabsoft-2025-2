@@ -4,10 +4,10 @@ Nome da equipe
 
 ## Lista de Equipes/Projetos
 - [Clara Meister Martinovsky e Guilherme Torres Fiedler (claramartinovsky/fabsoft-2025-2)](https://github.com/claramartinovsky/fabsoft-2025-2)
-- [(edsonjunior23/fabsoft-2025-02)](https://github.com/edsonjunior23/fabsoft-2025-02)
+- [Edson e Gustavo edsonjunior23/fabsoft-2025-02:](https://github.com/edsonjunior23/fabsoft-2025-02)
 - [Fellipe N. Prim e Lucas Felipe (fellipe-prim/fabsoft-2025-2)](https://github.com/fellipe-prim/fabsoft-2025-2)
 - [Gian Carlo Fiamoncini e Carlos Alberto (gianfiamonciniuniville/fabsoft-2025-2)](https://github.com/gianfiamonciniuniville/fabsoft-2025-2)
-- [(hamsterbr/fabsoft-2025-2)](https://github.com/hamsterbr/fabsoft-2025-2)
+- [Leonardo e Satty (hamsterbr/fabsoft-2025-2)](https://github.com/hamsterbr/fabsoft-2025-2)
 - [Caio (ijustgotanidea/fabsoft-2025-2)](https://github.com/ijustgotanidea/fabsoft-2025-2)
 - [Cleverson Santos (Cleverson-Santoss/fabsoft-2025-2)](https://github.com/Cleverson-Santoss/fabsoft-2025-2)
 - [João Victor Corrêa Palhano (JoaoPalhano07/fabsoft-2025-2)](https://github.com/JoaoPalhano07/fabsoft-2025-2)
