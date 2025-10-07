@@ -225,3 +225,84 @@ block-beta
 
 ```
 
+# 2 Bimestre
+
+## Aula 07/10
+
+-[DEVOPS](https://learn.microsoft.com/en-us/training/modules/introduction-to-devops/2-what-is-devops)
+
+-[Containers Docker](https://learn.microsoft.com/en-us/training/modules/intro-to-docker-containers/)
+
+
+### Dockerfile
+```bash
+# Etapa 1: Build
+FROM maven:3.9.11-eclipse-temurin-21 AS build
+
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Copia o arquivo pom.xml e as dependências
+COPY pom.xml ./
+RUN mvn dependency:go-offline -B
+
+# Copia o restante do código da aplicação
+COPY src ./src
+
+# Compila o projeto e gera o arquivo JAR
+RUN mvn clean package -DskipTests
+
+# Etapa 2: Produção
+FROM eclipse-temurin:21-jre-alpine AS production
+
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Copia o arquivo JAR gerado na etapa de build
+COPY --from=build /app/target/*.jar app.jar
+
+# Define o profile ativo como 'dev'
+#ENV SPRING_PROFILES_ACTIVE=dev
+
+# Expõe a porta padrão do Spring Boot
+EXPOSE 8080
+
+# Comando para iniciar a aplicação
+CMD ["java", "-jar", "app.jar"]
+```
+
+- [GitHub Actions](https://learn.microsoft.com/en-us/training/modules/introduction-to-github-actions/)
+
+### .github/workflows/buildbackend.yml
+
+```yaml
+name: Build Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and push Docker image to GitHub Container Registry
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/projfabsoft:${{ github.run_number }} ./fabsoft-backend
+          docker push ghcr.io/${{ github.repository }}/projfabsoft:${{ github.run_number }}
+```
