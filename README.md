@@ -306,3 +306,51 @@ jobs:
           docker build -t ghcr.io/${{ github.repository }}/projfabsoft:${{ github.run_number }} ./fabsoft-backend
           docker push ghcr.io/${{ github.repository }}/projfabsoft:${{ github.run_number }}
 ```
+
+## OpenAPI - Swagger
+- Alterar o arquivo pom.xml do projeto backend para incluir a dependencia
+```xml
+<dependency>
+  <groupId>org.springdoc</groupId>
+  <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+  <version>2.1.0</version>
+</dependency>
+```
+
+## Frontend Angular
+
+- Criar o projeto Angular
+```bash
+ng new projfabsoft_frontend
+```
+
+- Acessar a pasta do projeto
+
+```bash
+cd projfabsoft_frontend
+```
+
+- Executar o servidor do Angular
+
+```bash
+ng serve
+```
+- Para acessar o frontend utilize o link [http://localhost:4200](http://localhost:4200)
+
+- Instalação do Bootstrap
+
+```bash
+npm install bootstrap
+```
+
+- No arquivo angular.json [🔗](./projfabsoft_frontend/angular.json)
+
+```json
+"styles": [
+    "src/styles.css",
+    "node_modules/bootstrap/dist/css/bootstrap.css"
+],
+"scripts": [
+    "node_modules/bootstrap/dist/js/bootstrap.js"
+]
+```
