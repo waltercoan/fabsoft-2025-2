@@ -321,13 +321,13 @@ jobs:
 
 - Criar o projeto Angular
 ```bash
-ng new projfabsoft_frontend
+ng new fabsoft-frontend
 ```
 
 - Acessar a pasta do projeto
 
 ```bash
-cd projfabsoft_frontend
+cd fabsoft-frontend
 ```
 
 - Executar o servidor do Angular
@@ -343,7 +343,7 @@ ng serve
 npm install bootstrap
 ```
 
-- No arquivo angular.json [🔗](./projfabsoft_frontend/angular.json)
+- No arquivo angular.json [🔗](./fabsoft-frontend/angular.json)
 
 ```json
 "styles": [
