@@ -354,3 +354,148 @@ npm install bootstrap
     "node_modules/bootstrap/dist/js/bootstrap.js"
 ]
 ```
+### Gerando a primeira tela de Cliente 
+
+- Gerando o componente do Angular
+
+```bash
+ng generate component cliente.component
+```
+
+- Criando a interface gráfica HTML /src/app/cliente/cliente.component.html [🔗](./fabsoft-frontend/src/app/cliente/cliente.component.html)
+
+```html
+<main class="container">
+    <table class="table">
+        ....
+    </table>
+</main>
+```
+
+- Criando a classe Model
+
+```bash
+ng generate class model/cliente
+```
+
+- Código da classe /src/app/model/cliente.ts [🔗](./fabsoft-frontend/src/app/model/cliente.ts)
+
+```ts
+export class Cliente {
+    id: number;
+    nome: string;
+    endereco: string;
+    telefone: string;
+    email: string;
+    dataNascimento: Date;
+}
+```
+
+- Configurar o arquivo tsconfig.json [🔗](./fabsoft-frontend/tsconfig.json) para suportar a não inicialização dos atributos 
+
+```bash
+"compilerOptions": {
+    "strictPropertyInitialization": false,
+} 
+```
+
+- Gerar o serviço
+
+```bash
+ng generate service service/cliente.service
+```
+
+- Codigo do serviço /src/app/service/cliente.service.ts [🔗](./fabsoft-frontend/src/app/service/cliente.service.ts)
+
+```ts
+import { Injectable } from '@angular/core';
+import { Cliente } from '../model/cliente';
+import { HttpClient } from '@angular/common/http';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ClienteService {
+  apiURL = "http://localhost:8080/api/v1/clientes";
+  
+  constructor(private http:HttpClient) { }
+
+  getClientes(){
+    return this.http.get<Cliente[]>(this.apiURL);
+  }
+
+}
+```
+
+- Alterar o arquivo /src/app/app.component.html [🔗](./fabsoft-frontend/src/app/app.component.html) para gerar apenas a tela dos componentes
+
+```html
+<router-outlet />
+```
+
+- Modificar o código do componente /src/app/cliente/cliente.component.ts [🔗](./fabsoft-frontend/src/app/cliente/cliente.component.ts) para chamar o serviço e guardar a lista de clientes em um atributo
+
+```ts
+import { Component } from '@angular/core';
+import { Cliente } from '../model/cliente';
+import { ClienteService } from '../service/cliente.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-cliente',
+  imports: [HttpClientModule,CommonModule],
+  templateUrl: './cliente.component.html',
+  styleUrl: './cliente.component.css',
+  providers: [ClienteService]
+})
+export class ClienteComponent {
+  listaClientes: Cliente[] = [];
+
+  constructor(private clienteService: ClienteService) {}
+
+  ngOnInit() {
+    console.log("Carregando clientes...");
+    this.clienteService.getClientes().subscribe(clientes => {
+      this.listaClientes = clientes;
+    });
+  }
+}
+```
+
+- Modificar o arquivo /src/app/cliente/cliente.component.html [🔗](./fabsoft-frontend/src/app/cliente/cliente.component.html) para desenhar a tabela de clientes
+
+```html
+<main class="container">
+    <h2>Clientes</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let umCliente of listaClientes">
+                <td>{{umCliente.nome}}</td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+```
+
+- Modificar o arquivo /src/app/app.routes.ts [🔗](./fabsoft-frontend/src/app/app.routes.ts) para incluir a rota para o componente
+
+```ts
+import { Routes } from '@angular/router';
+import { ClienteComponent } from './cliente/cliente.component';
+export const routes: Routes = [
+    { path: 'clientes', component: ClienteComponent }
+];
+```
+
+- Rodar a aplicação
+
+```bash
+ng serve
+```
