@@ -499,3 +499,86 @@ export const routes: Routes = [
 ```bash
 ng serve
 ```
+
+- Rodar a aplicação
+
+```bash
+ng serve
+```
+
+- [Cross-origin resource sharing](https://pt.wikipedia.org/wiki/Cross-origin_resource_sharing)
+
+- No projeto Backend Java Spring Boot crie um pacote chamado br.univille.projfabsoft.config, e dentro dele uma classe WebConfig.java [🔗](./projfabsoft/src/main/java/br/univille/projfabsoft/config/WebConfig.java) com o seguinte código:
+
+
+```java
+package br.univille.fabsoft_backend.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer  {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedHeaders("*")
+                .allowedOriginPatterns("*")
+                .allowedOrigins("*")
+                .allowedMethods("*")
+                .maxAge(1800);
+
+    }
+}
+```
+## Criação da tela de cadastro de clientes
+
+- Alterar o arquivo /src/app/cliente/cliente.component.ts para importar o Router e criar a função novo()
+
+```ts
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-cliente',
+  imports: [HttpClientModule, CommonModule],
+  templateUrl: './cliente.component.html',
+  styleUrl: './cliente.component.css',
+  providers: [ClienteService, Router]
+})
+
+constructor(
+    private clienteService:ClienteService,
+    private router:Router
+){}
+novo(){
+  this.router.navigate(['clientes/novo']);
+}    
+```
+- Alterar o arquivo /src/app/cliente/cliente.component.html criar o botao para a nova tela de formulário
+
+```html
+<a (click)="novo()" class="btn btn-primary">Novo</a>
+```
+
+- Alterar o arquivo /app/app.routes.ts para registrar a rota da nova tela
+
+```ts
+import { Routes } from '@angular/router';
+import { ClienteComponent } from './cliente/cliente.component';
+import { FormClienteComponent } from './form-cliente/form-cliente.component';
+
+export const routes: Routes = [
+    { path: 'clientes', component: ClienteComponent},
+    { path: 'clientes/novo', component: FormClienteComponent},
+];
+```
+
+- Abrir o console e digitar o comando para criar um novo componente que será a tela de cadastro
+
+```bash
+ng generate component form-cliente
+```

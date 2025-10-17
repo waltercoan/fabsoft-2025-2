@@ -3,19 +3,22 @@ import { Cliente } from '../model/cliente';
 import { ClienteService } from '../service/cliente.service';
 import { HttpClientModule }  from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente',
   imports: [HttpClientModule, CommonModule],
   templateUrl: './cliente.html',
   styleUrl: './cliente.css',
-  providers: [ClienteService]
+  providers: [ClienteService,  Router]
 })
 export class ClienteComponent {
   listaClientes: Cliente[] = []
 
-  constructor(private clienteService: ClienteService){}
+  constructor(
+    private clienteService: ClienteService,
+    private router:Router
+  ){}
 
   ngOnInit() {
     console.log('Carregando clientes...')
@@ -24,5 +27,9 @@ export class ClienteComponent {
     })
   }
 
+  novo(){
+    this.router.navigate(['clientes/novo']);
+  }
+  
 
 }
