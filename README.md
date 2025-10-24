@@ -665,3 +665,224 @@ export class FormClienteComponent {
     </div>
 </main>
 ```
+
+## Funcionalidade de ALTERAR
+
+- Modifique o controlador [ClienteController](./projfabsoft/src/main/java/br/univille/projfabsoft/controller/ClienteController.java) no projeto Java Spring Boot para incluir um novo endpoint para buscar um único cliente pelo ID
+
+```java
+@RestController
+@RequestMapping("/api/v1/clientes")
+public class ClienteController {
+
+    @GetMapping("/{id}")	
+    public ResponseEntity<Cliente> getClienteId(@PathVariable Long id){
+        var cliente = service.getById(id);
+
+        return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+    }
+```
+
+```java
+package br.univille.fabsoft_backend.service;
+
+import java.util.List;
+
+import br.univille.fabsoft_backend.entity.Cliente;
+
+public interface ClienteService {
+    List<Cliente> getAll();
+    Cliente save(Cliente cliente);
+    Cliente update(long id, Cliente cliente) throws Exception;
+    Cliente delete(long id) throws Exception;
+    Cliente getById(long id);
+}
+```
+
+```java
+package br.univille.fabsoft_backend.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.univille.fabsoft_backend.entity.Cliente;
+import br.univille.fabsoft_backend.repository.ClienteRepository;
+import br.univille.fabsoft_backend.service.ClienteService;
+
+@Service
+public class ClienteServiceImpl 
+    implements ClienteService{
+
+    @Autowired
+    private ClienteRepository repository;
+
+    @Override
+    public List<Cliente> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Cliente save(Cliente cliente) {
+        return repository.save(cliente);
+    }
+
+    @Override
+    public Cliente update(long id, Cliente cliente) throws Exception{
+
+        var clienteAntigo = repository.getById(id);
+        if(clienteAntigo == null){
+            throw new Exception("Cliente inexistente");
+        }
+
+        clienteAntigo.setNome(cliente.getNome());
+        clienteAntigo.setDataNascimento(cliente.getDataNascimento());
+        clienteAntigo.setEmail(cliente.getEmail());
+        clienteAntigo.setEndereco(cliente.getEndereco());
+        clienteAntigo.setTelefone(cliente.getTelefone());
+        clienteAntigo.setCidade(cliente.getCidade());
+        
+        repository.save(clienteAntigo);
+
+        return clienteAntigo;
+    }
+
+    @Override
+    public Cliente delete(long id) throws Exception {
+        var clienteAntigo = repository.getById(id);
+        if(clienteAntigo == null){
+            throw new Exception("Cliente inexistente");
+        }
+
+        repository.delete(clienteAntigo);
+        return clienteAntigo;
+    }
+
+    @Override
+    public Cliente getById(long id) {
+        var retorno = repository.findById(id);
+        if(retorno.isPresent())
+            return retorno.get();
+        
+        return null;
+    }
+
+}
+```
+
+- Retorne ao projeto ANGULAR e altere o service do [cliente.service.ts](./projfabsoft_frontend/src/app/service/cliente.service.ts) para criar o método para buscar o cliente pelo ID
+
+```ts
+  getClienteById(id: any) {
+    return this.http.get<Cliente>(this.apiURL + '/' + id);
+  }
+```
+
+- Altere a tela do Cliente [cliente.component.html](./projfabsoft_frontend/src/app/cliente/cliente.component.html) para incluir o botao ALTERAR na tela
+
+```html
+      <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th>Telefone</th>
+                <th>E-mail</th>
+                <th>Data Nascimento</th>
+                <th></th> <!-- ALTERADO-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let umCliente of listaClientes">
+                <td>{{umCliente.nome}}</td>
+                <td>{{umCliente.endereco}}</td>
+                <td>{{umCliente.telefone}}</td>
+                <td>{{umCliente.email}}</td>
+                <td>{{umCliente.dataNascimento | date:'dd/MM/yyyy'}}</td>
+                <td><a (click)="alterar(umCliente)" 
+                    class="btn btn-secondary">Alterar</a></td> <!-- ALTERADO-->
+            </tr>
+        </tbody>
+    </table>
+```
+
+- Altere o controlador da tela [cliente.component.ts](./projfabsoft_frontend/src/app/cliente/cliente.component.ts) para incluir a função alterar()
+
+```ts
+  alterar(cliente:Cliente){
+      this.router.navigate(['clientes/alterar', cliente.id]);
+  }
+```
+
+- Altere o arquivo de rotas da aplicação [app.routes.ts](./projfabsoft_frontend/src/app/app.routes.ts) para incluir a nova rota de alterar
+
+```ts
+import { Routes } from '@angular/router';
+import { ClienteComponent } from './cliente/cliente.component';
+import { FormClienteComponent } from './form-cliente/form-cliente.component';
+
+export const routes: Routes = [
+    {path: 'clientes', component: ClienteComponent},
+    {path: 'clientes/novo', component: FormClienteComponent},
+    {path: 'clientes/alterar/:id', component: FormClienteComponent} //ALTERADO
+];
+```
+
+- Altere o controlador do formulário do cliente [form-cliente.component.ts](./projfabsoft_frontend/src/app/form-cliente/form-cliente.component.ts) para receber o id do cliente, chamar o serviço do cliente e mostrar em tela os dados do cliente retornado pelo backend
+
+```ts
+import { Component } from '@angular/core';
+import { Cliente } from '../model/cliente';
+import { ClienteService } from '../service/cliente.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router'; //ALTERADO
+
+@Component({
+  selector: 'app-form-cliente',
+  imports: [HttpClientModule, CommonModule, FormsModule],
+  templateUrl: './form-cliente.component.html',
+  styleUrl: './form-cliente.component.css',
+  providers: [ClienteService, Router]
+})
+export class FormClienteComponent {
+    cliente:Cliente = new Cliente();
+
+    constructor(
+      private clienteService: ClienteService,
+      private router: Router,
+      private activeRouter: ActivatedRoute //ALTERADO
+    ) {
+        //ALTERADO
+        const id = this.activeRouter.snapshot.paramMap.get('id');
+        
+        if (id) {
+          this.clienteService.getClienteById(id).subscribe(cliente => {
+            this.cliente = cliente;
+        });
+        //ALTERADO
+      }
+    }
+
+    salvar(){
+      this.clienteService.saveCliente(this.cliente)
+          .subscribe( res => {
+            this.router.navigate(['clientes']);
+          });
+    }
+
+}
+```
+
+- Modifique o service do cliente [cliente.service.ts](./projfabsoft_frontend/src/app/service/cliente.service.ts) para na função saveCliente() verificar se a propriedade id estiver preenchida, chamar o método PUT da API.
+
+```ts
+  saveCliente(cliente:Cliente){
+    if(cliente.id){
+      return this.http.put(this.apiURL + '/' + cliente.id, cliente);
+    }
+    return this.http.post(this.apiURL,cliente);
+  }
+```

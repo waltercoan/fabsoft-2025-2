@@ -57,4 +57,13 @@ public class ClienteServiceImpl
         return clienteAntigo;
     }
 
+    @Override
+    public Cliente getById(long id) {
+        var retorno = repository.findById(id);
+        if(retorno.isPresent())
+            return retorno.get();
+        
+        return null;
+    }
+
 }

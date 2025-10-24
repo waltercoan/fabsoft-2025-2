@@ -30,6 +30,10 @@ export class ClienteComponent {
   novo(){
     this.router.navigate(['clientes/novo']);
   }
+
+  alterar(cliente:Cliente){
+    this.router.navigate(['clientes/alterar', cliente.id]);
+  }
   
 
 }

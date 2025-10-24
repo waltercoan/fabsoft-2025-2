@@ -9,6 +9,7 @@
                 <th>Telefone</th>
                 <th>E-mail</th>
                 <th>Data Nascimento</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,9 @@
                 <td>{{ umCliente.telefone }}</td>
                 <td>{{ umCliente.email }}</td>
                 <td>{{ umCliente.dataNascimento | date: 'dd/MM/yyyy' }}</td>
+                <td> <button 
+                        (click)="alterar(umCliente)"
+                    class="btn btn-secondary">Alterar</button> </td>
             </tr>
         </tbody>
     </table>
