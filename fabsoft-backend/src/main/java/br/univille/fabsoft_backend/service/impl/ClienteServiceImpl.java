@@ -29,11 +29,12 @@ public class ClienteServiceImpl
     @Override
     public Cliente update(long id, Cliente cliente) throws Exception{
 
-        var clienteAntigo = repository.getById(id);
-        if(clienteAntigo == null){
+        var optResp = repository.findById(id);
+        if(!optResp.isPresent()){
             throw new Exception("Cliente inexistente");
         }
-
+        var clienteAntigo = optResp.get();
+        
         clienteAntigo.setNome(cliente.getNome());
         clienteAntigo.setDataNascimento(cliente.getDataNascimento());
         clienteAntigo.setEmail(cliente.getEmail());
@@ -48,11 +49,13 @@ public class ClienteServiceImpl
 
     @Override
     public Cliente delete(long id) throws Exception {
-        var clienteAntigo = repository.getById(id);
-        if(clienteAntigo == null){
+       var optResp = repository.findById(id);
+        if(!optResp.isPresent()){
             throw new Exception("Cliente inexistente");
         }
 
+        var clienteAntigo = optResp.get();
+        
         repository.delete(clienteAntigo);
         return clienteAntigo;
     }

@@ -771,7 +771,7 @@ public class ClienteServiceImpl
 }
 ```
 
-- Retorne ao projeto ANGULAR e altere o service do [cliente.service.ts](./projfabsoft_frontend/src/app/service/cliente.service.ts) para criar o método para buscar o cliente pelo ID
+- Retorne ao projeto ANGULAR e altere o service do [cliente.service.ts](./fabsoft-frontend/src/app/service/cliente.service.ts) para criar o método para buscar o cliente pelo ID
 
 ```ts
   getClienteById(id: any) {
@@ -779,7 +779,7 @@ public class ClienteServiceImpl
   }
 ```
 
-- Altere a tela do Cliente [cliente.component.html](./projfabsoft_frontend/src/app/cliente/cliente.component.html) para incluir o botao ALTERAR na tela
+- Altere a tela do Cliente [cliente.component.html](./fabsoft-frontend/src/app/cliente/cliente.component.html) para incluir o botao ALTERAR na tela
 
 ```html
       <table class="table">
@@ -807,7 +807,7 @@ public class ClienteServiceImpl
     </table>
 ```
 
-- Altere o controlador da tela [cliente.component.ts](./projfabsoft_frontend/src/app/cliente/cliente.component.ts) para incluir a função alterar()
+- Altere o controlador da tela [cliente.component.ts](./fabsoft-frontend/src/app/cliente/cliente.component.ts) para incluir a função alterar()
 
 ```ts
   alterar(cliente:Cliente){
@@ -815,7 +815,7 @@ public class ClienteServiceImpl
   }
 ```
 
-- Altere o arquivo de rotas da aplicação [app.routes.ts](./projfabsoft_frontend/src/app/app.routes.ts) para incluir a nova rota de alterar
+- Altere o arquivo de rotas da aplicação [app.routes.ts](./fabsoft-frontend/src/app/app.routes.ts) para incluir a nova rota de alterar
 
 ```ts
 import { Routes } from '@angular/router';
@@ -829,7 +829,7 @@ export const routes: Routes = [
 ];
 ```
 
-- Altere o controlador do formulário do cliente [form-cliente.component.ts](./projfabsoft_frontend/src/app/form-cliente/form-cliente.component.ts) para receber o id do cliente, chamar o serviço do cliente e mostrar em tela os dados do cliente retornado pelo backend
+- Altere o controlador do formulário do cliente [form-cliente.component.ts](./fabsoft-frontend/src/app/form-cliente/form-cliente.component.ts) para receber o id do cliente, chamar o serviço do cliente e mostrar em tela os dados do cliente retornado pelo backend
 
 ```ts
 import { Component } from '@angular/core';
@@ -876,7 +876,7 @@ export class FormClienteComponent {
 }
 ```
 
-- Modifique o service do cliente [cliente.service.ts](./projfabsoft_frontend/src/app/service/cliente.service.ts) para na função saveCliente() verificar se a propriedade id estiver preenchida, chamar o método PUT da API.
+- Modifique o service do cliente [cliente.service.ts](./fabsoft-frontend/src/app/service/cliente.service.ts) para na função saveCliente() verificar se a propriedade id estiver preenchida, chamar o método PUT da API.
 
 ```ts
   saveCliente(cliente:Cliente){
@@ -885,4 +885,106 @@ export class FormClienteComponent {
     }
     return this.http.post(this.apiURL,cliente);
   }
+```
+
+## Funcionalidade de EXCLUIR
+
+-  Abrir o terminal e digitar o comando abaixo para instalar a definição de tipos do bootstrap no typescript
+
+```bash
+npm i @types/bootstrap
+```
+
+- Alterar o arquivo [cliente.service.ts](./fabsoft-frontend/src/app/service/cliente.service.ts) para incluir a função de excluir cliente e chamar o método delete da API no backend
+
+```ts
+excluirCliente(id: any){
+  return this.http.delete<Cliente>(this.apiURL + '/' + id);
+}
+```
+
+- Alterar o arquivo [cliente.component.html](./fabsoft-frontend/src/app/cliente/cliente.component.html) para incluir o código HTML necessário para que o bootstrap crie uma janela de confirmação (MODAL)
+
+```html
+<div class="modal fade" #myModal tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir cliente</h5>
+            </div>
+            <div class="modal-body">
+            Confirma a exclusão do cliente?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="fecharConfirmacao()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="confirmarExclusao()">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+- Alterar o arquivo [cliente.component.html](./fabsoft-frontend/src/app/cliente/cliente.component.html) para incluir o código HTML necessário para que o botao excluir seja apresentado em cada cliente
+
+```html
+<td>
+  <button 
+      (click)="alterar(umCliente)"
+  class="btn btn-secondary">Alterar</button>
+  <button 
+      (click)="abrirConfirmacao(umCliente)"
+  class="btn btn-danger">Excluir</button>
+</td>
+```
+
+
+- Alterar o arquivo [cliente.component.ts](./fabsoft-frontend/src/app/cliente/cliente.component.ts) para importar os seguintes objetos
+
+```ts
+// MANTER OS IMPORTS JA EXISTENTES
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import * as bootstrap from 'bootstrap';
+```
+
+- Ainda no arquivo [cliente.component.ts](./fabsoft-frontend/src/app/cliente/cliente.component.ts) criar duas variáveis para encontrar a referencia da janela de confirmação modal do bootstrap
+
+```ts
+@ViewChild('myModal') modalElement!: ElementRef;
+private modal!: bootstrap.Modal;
+
+private clienteSelecionado!: Cliente;
+```
+
+- Ainda no arquivo [cliente.component.ts](./fabsoft-frontend/src/app/cliente/cliente.component.ts) criar o código das funções para abrir e fechar a janela de confirmação
+
+```ts
+abrirConfirmacao(cliente:Cliente) {
+    this.clienteSelecionado = cliente;
+    this.modal = new bootstrap.Modal(this.modalElement.nativeElement);
+    this.modal.show();
+}
+
+fecharConfirmacao() {
+  this.modal.hide();
+}
+```
+
+- Ainda no arquivo [cliente.component.ts](./fabsoft-frontend/src/app/cliente/cliente.component.ts) criar o código da função confirmar exclusão que deverá chamar o service para excluir o registro e em caso de sucesso, fechar a janela e buscar novamente todos os clientes no backend para atualizar a tabela.
+
+```ts
+confirmarExclusao() {
+    this.clienteService.excluirCliente(this.clienteSelecionado.id).subscribe(
+        () => {
+            this.fecharConfirmacao();
+            this.clienteService.getClientes().subscribe(
+              clientes => {
+                this.listaClientes = clientes;
+              }
+            );
+        },
+        error => {
+            console.error('Erro ao excluir cliente:', error);
+        }
+    );
+}
 ```
