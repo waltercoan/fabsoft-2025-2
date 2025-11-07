@@ -37,6 +37,16 @@
                     class="form-control"
                     id="txtDataNascimento">
             </div>
+
+
+            <div class="form-group">
+                <label for="txtCidade">Cidade</label>
+                <select class="form-select" [(ngModel)]="cliente.cidade" [compareWith]="comparaCidades">
+                    <option *ngFor="let umaCidade of listaCidades"
+                    [ngValue]="umaCidade"> {{ umaCidade.nome }}</option>
+                </select>
+            </div>
+
         </div>
         <button (click)="salvar()"
             class="btn btn-primary">Salvar</button>

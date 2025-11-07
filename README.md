@@ -988,3 +988,107 @@ confirmarExclusao() {
     );
 }
 ```
+
+## Funcionalidade de MUITOS PARA UM
+
+- Na tela de cadastro de Cliente é possível selecionar a Cidade
+
+![Exemplo de Tela](./imgs/muitosparaum.png)
+
+- A entidade [Cliente](./fabsoft-frontend/src/app/model/cliente.ts) precisa ter um atributo do tipo Cidade
+
+```ts
+
+import { Cidade } from "./cidade";
+
+export class Cliente {
+    id:number;
+    nome:string;
+    endereco:string;
+    telefone:string;
+    email:string;
+    dataNascimento: Date;
+    cidade: Cidade;
+
+}
+
+```
+
+- No controlador do formulário do cliente [form-cliente.component.ts](./fabsoft-frontend/src/app/form-cliente/form-cliente.component.ts) importar o model Cidade e seu serviço
+
+```ts
+//MANTER OS OUTROS IMPORTS
+import { Cidade } from '../model/cidade';
+import { CidadeService } from '../service/cidade.service';
+```
+
+- No controlador do formulário do cliente [form-cliente.component.ts](./fabsoft-frontend/src/app/form-carro/form-cliente.component.ts) incluir o CidadeService nos providers
+
+```ts
+@Component({
+  selector: 'app-form-carro',
+  imports: [HttpClientModule, CommonModule, FormsModule],
+  templateUrl: './form-carro.component.html',
+  styleUrl: './form-carro.component.css',
+  providers: [CarroService, Router, CidadeService] //ALTERAR AQUI
+})
+```
+
+- No controlador do formulário do cliente [form-cliente.component.ts](./fabsoft-frontend/src/app/form-cidade/form-cliente.component.ts) criar uma variavel lista para guardar as cidades
+
+```ts
+export class FormCliente {
+    cliente: Cliente = new Cliente();
+
+    listaCidades:Cidade[] = [];
+
+```
+
+- No controlador do formulário do cidade [form-cidade.component.ts](./fabsoft-frontend/src/app/form-cidade/form-cidade.component.ts), no construtor carregar a lista de cidades chamando os serviço do cidade
+
+```ts
+    constructor(
+      private clienteService:ClienteService,
+      private cidadeService:CidadeService,
+      private router:Router,
+      private activeRouter: ActivatedRoute
+      
+    ){
+        let id = this.activeRouter.snapshot.paramMap.get('id')
+
+        this.cidadeService.getCidades().subscribe(listaCidades =>{
+          this.listaCidades = listaCidades
+        })
+        
+
+        if(id) {
+          this.clienteService.getClienteById(id)
+            .subscribe( res => {
+                this.cliente = res
+            })
+        }
+    }
+
+```
+
+- No controlador do formulário do cliente [form-cliente.component.ts](./fabsoft-frontend/src/app/form-cliente/form-cliente.component.ts), criar um novo método compararCidades para ensinar o Angular a comparar dois objetos Cidade. Necessário para que o select funcione.
+
+```ts
+  comparaCidades(obj1: Cidade, obj2: Cidade): boolean{
+      return obj1 && obj2 ? obj1.id === obj2.id : obj1 === obj2
+  }
+```
+
+- Na tela de formulário do Clientes [form-cliente.component.html](./fabsoft-frontend/src/app/form-cliente/form-cliente.component.html) incluir o campo select para listar as cidades em tela.
+
+```html
+<div class="form-group">
+    <label for="txtCidade">Cidade</label>
+    <select class="form-select" [(ngModel)]="cliente.cidade" [compareWith]="comparaCidades">
+        <option *ngFor="let umaCidade of listaCidades"
+        [ngValue]="umaCidade"> {{ umaCidade.nome }}</option>
+    </select>
+</div>
+```
+
+

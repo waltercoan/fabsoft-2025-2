@@ -1,3 +1,5 @@
+import { Cidade } from "./cidade";
+
 export class Cliente {
     id:number;
     nome:string;
@@ -5,5 +7,6 @@ export class Cliente {
     telefone:string;
     email:string;
     dataNascimento: Date;
+    cidade: Cidade;
 
 }
